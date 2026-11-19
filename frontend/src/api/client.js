@@ -1,4 +1,5 @@
-const API_URL = (import.meta.env.VITE_API_URL || 'https://muralesenlavuelta.onrender.com/')
+const configuredApiUrl = (import.meta.env.VITE_API_URL || 'https://muralesenlavuelta.onrender.com').replace(/\/+$/, '')
+const API_URL = configuredApiUrl.endsWith('/api') ? configuredApiUrl : `${configuredApiUrl}/api`
 
 const request = async (path, options = {}) => {
   const token = localStorage.getItem('33grados_token')

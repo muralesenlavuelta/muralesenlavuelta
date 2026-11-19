@@ -4,6 +4,8 @@ import Icon from './Icon'
 function MuralCard({ mural, onOpen, featured = false }) {
   const image = mural.images?.find((item) => item.isPrimary) || mural.images?.[0]
   const authors = mural.authors?.map((author) => author.name).join(', ')
+  const description = mural.description || 'Este mural todavía no tiene una descripción.'
+  const excerpt = description.length > 140 ? `${description.slice(0, 140).trimEnd()}…` : description
 
   return (
     <article className={`mural-card ${featured ? 'mural-card-featured' : ''}`}>
@@ -14,7 +16,8 @@ function MuralCard({ mural, onOpen, featured = false }) {
       <div className="mural-card-body">
         <div className="eyebrow">{mural.address || 'Ubicación no indicada'}</div>
         <h3><button onClick={() => onOpen(mural)}>{mural.name}</button></h3>
-        <p>{mural.description || 'Este mural todavía no tiene una descripción.'}</p>
+        <p className="mural-card-description">{excerpt}</p>
+        {description.length > 140 && <button className="mural-card-more" onClick={() => onOpen(mural)}>Leer más</button>}
         <div className="mural-meta"><span>{authors || 'Autor desconocido'}</span><span className="likes" aria-label={`${mural.likesCount ?? 0} me gusta`}><Icon name="heart" size={15} /> {mural.likesCount ?? 0}</span></div>
       </div>
     </article>
